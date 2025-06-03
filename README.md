@@ -29,7 +29,7 @@
 
 - C-Code: Embedded Implementierung für Mikrocontroller
 - Curve25519 (ECC) Schlüsselgenerierung & ECDH
-  - Header (ecc_curve25519.h):
+- Header (ecc_curve25519.h):
 
 ```yarn
 #ifndef ECC_CURVE25519_H
