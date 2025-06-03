@@ -1,9 +1,6 @@
 |Bylicki Secure Hybrid (BSH)|
 |---|
 
-|![ChatGPT Image 3  Juni 2025, 18_50_30](https://github.com/user-attachments/assets/1323b3bb-45d8-4a4c-a678-436d71efa35b)|
-|---|
-
 <br><br>
 
 - I. Algorithmus-Konzept: Hybrid-Verschlüsselung „Bylicki Secure Hybrid (BSH)“
