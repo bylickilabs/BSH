@@ -77,3 +77,25 @@ int compute_shared_secret(const uint8_t priv[32], const uint8_t peer_pub[32], ui
 
 <br>
 
+|1.2 AES-256 GCM Verschlüsselung & Entschlüsselung|
+|---|
+
+- Header (aes_gcm.h):
+
+```yarn
+#ifndef AES_GCM_H
+#define AES_GCM_H
+
+#include <stdint.h>
+#include <stddef.h>
+
+int aes_gcm_encrypt(const uint8_t *key, const uint8_t *nonce,
+                    const uint8_t *plaintext, size_t plen,
+                    uint8_t *ciphertext, uint8_t *tag);
+
+int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
+                    const uint8_t *ciphertext, size_t clen,
+                    const uint8_t *tag, uint8_t *plaintext);
+
+#endif
+```
