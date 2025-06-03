@@ -286,10 +286,10 @@ if __name__ == "__main__":
 |3. Hinweise zur Nutzung und Integration|
 |---|
 
->C-Code ist optimiert für ARM Cortex-M Mikrocontroller, idealerweise mit Hardware-RNG und AES-Beschleunigung.
->mbedTLS wird als sichere, freie Kryptobibliothek empfohlen, enthält AES-GCM, SHA256, HMAC, und HKDF.
->Curve25519 Implementierung sollte geprüft und sicherheitszertifiziert sein (z. B. libsodium oder micro-ecc).
->Python-Code dient als funktionaler Prototyp und Test-Umgebung für schnelle Validierung.
+>C-Code ist optimiert für ARM Cortex-M Mikrocontroller, idealerweise mit Hardware-RNG und AES-Beschleunigung. <p>
+>mbedTLS wird als sichere, freie Kryptobibliothek empfohlen, enthält AES-GCM, SHA256, HMAC, und HKDF. <p>
+>Curve25519 Implementierung sollte geprüft und sicherheitszertifiziert sein (z. B. libsodium oder micro-ecc). <p>
+>Python-Code dient als funktionaler Prototyp und Test-Umgebung für schnelle Validierung. <p>
 >Modularer Aufbau erlaubt einfache Erweiterung und Portierung auf andere Plattformen.
 
 
