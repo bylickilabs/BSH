@@ -3,8 +3,8 @@
 
 <br><br>
 
-- 1. Algorithmus-Konzept: Hybrid-Verschlüsselung „Bylicki Secure Hybrid (BSH)“
-     - 1.1 Grundidee
+- I. Algorithmus-Konzept: Hybrid-Verschlüsselung „Bylicki Secure Hybrid (BSH)“
+     - I.I Grundidee
 >Kombination aus symmetrischer und asymmetrischer Verschlüsselung mit zusätzlicher Mehrfaktor-Zufallsgenerierung und eingebauter Schlüsselrotation zur Erhöhung der Sicherheit und Anpassbarkeit.
 
 - 1.2 Algorithmus-Komponenten
