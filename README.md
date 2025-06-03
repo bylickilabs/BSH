@@ -7,7 +7,7 @@
      - I.I Grundidee
 >Kombination aus symmetrischer und asymmetrischer Verschlüsselung mit zusätzlicher Mehrfaktor-Zufallsgenerierung und eingebauter Schlüsselrotation zur Erhöhung der Sicherheit und Anpassbarkeit.
 
-- 1.2 Algorithmus-Komponenten
+- I.II Algorithmus-Komponenten
 >Symmetrischer Teil: AES-256 (Advanced Encryption Standard, 256 Bit Schlüssel)
 >Asymmetrischer Teil: Elliptic Curve Cryptography (ECC) mit Curve25519
 >Zufallsquelle: Kombiniert kryptographisch sichere Pseudozufallszahlen (CSPRNG) mit Hardware-Rauschquellen (z. B. Mikrochip-Sensoren)
