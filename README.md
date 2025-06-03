@@ -99,3 +99,198 @@ int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
 
 #endif
 ```
+
+- Quellcode (aes_gcm.c):
+
+```yarn
+#include "aes_gcm.h"
+#include "mbedtls/gcm.h"
+
+int aes_gcm_encrypt(const uint8_t *key, const uint8_t *nonce,
+                    const uint8_t *plaintext, size_t plen,
+                    uint8_t *ciphertext, uint8_t *tag) {
+    mbedtls_gcm_context gcm;
+    mbedtls_gcm_init(&gcm);
+    mbedtls_gcm_setkey(&gcm, MBEDTLS_CIPHER_ID_AES, key, 256);
+    int ret = mbedtls_gcm_crypt_and_tag(&gcm, MBEDTLS_GCM_ENCRYPT, plen,
+                                        nonce, 12, NULL, 0,
+                                        plaintext, ciphertext,
+                                        16, tag);
+    mbedtls_gcm_free(&gcm);
+    return ret;
+}
+
+int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
+                    const uint8_t *ciphertext, size_t clen,
+                    const uint8_t *tag, uint8_t *plaintext) {
+    mbedtls_gcm_context gcm;
+    mbedtls_gcm_init(&gcm);
+    mbedtls_gcm_setkey(&gcm, MBEDTLS_CIPHER_ID_AES, key, 256);
+    int ret = mbedtls_gcm_auth_decrypt(&gcm, clen,
+                                       nonce, 12,
+                                       NULL, 0,
+                                       tag, 16,
+                                       ciphertext, plaintext);
+    mbedtls_gcm_free(&gcm);
+    return ret;
+}
+```
+
+<br>
+
+|1.3 HKDF Schlüsselableitung (SHA-256 basierend)|
+|---|
+
+- Header (hkdf.h):
+
+```yarn
+#ifndef HKDF_H
+#define HKDF_H
+
+#include <stdint.h>
+#include <stddef.h>
+
+void hkdf_extract(const uint8_t *salt, size_t salt_len,
+                  const uint8_t *ikm, size_t ikm_len,
+                  uint8_t *prk);
+
+void hkdf_expand(const uint8_t *prk, size_t prk_len,
+                 const uint8_t *info, size_t info_len,
+                 uint8_t *okm, size_t okm_len);
+
+#endif
+```
+
+- Quellcode (hkdf.c):
+
+```yarn
+#include "hkdf.h"
+#include "mbedtls/md.h"
+#include <string.h>
+
+void hkdf_extract(const uint8_t *salt, size_t salt_len,
+                  const uint8_t *ikm, size_t ikm_len,
+                  uint8_t *prk) {
+    const mbedtls_md_info_t *md = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+    mbedtls_md_hmac(md, salt, salt_len, ikm, ikm_len, prk);
+}
+
+void hkdf_expand(const uint8_t *prk, size_t prk_len,
+                 const uint8_t *info, size_t info_len,
+                 uint8_t *okm, size_t okm_len) {
+    const mbedtls_md_info_t *md = mbedtls_md_info_from_type(MBEDTLS_MD_SHA256);
+    uint8_t T[32];
+    uint8_t counter = 1;
+    size_t pos = 0;
+    size_t n = (okm_len + 31) / 32;
+    size_t t_len = 0;
+
+    for (size_t i = 0; i < n; i++) {
+        mbedtls_md_context_t ctx;
+        mbedtls_md_init(&ctx);
+        mbedtls_md_setup(&ctx, md, 1);
+        mbedtls_md_hmac_starts(&ctx, prk, prk_len);
+        if (i != 0)
+            mbedtls_md_hmac_update(&ctx, T, t_len);
+        mbedtls_md_hmac_update(&ctx, info, info_len);
+        mbedtls_md_hmac_update(&ctx, &counter, 1);
+        mbedtls_md_hmac_finish(&ctx, T);
+        mbedtls_md_free(&ctx);
+
+        t_len = 32;
+        size_t to_copy = (okm_len - pos) > 32 ? 32 : (okm_len - pos);
+        memcpy(okm + pos, T, to_copy);
+        pos += to_copy;
+        counter++;
+    }
+}
+```
+
+<br>
+
+|2. Python-Test- und Prototypcode|
+|---|
+
+- test_bsh.py
+
+```yarn
+from cryptography.hazmat.primitives.asymmetric import x25519
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+import time
+
+class BylickiSecureHybrid:
+    def __init__(self):
+        self.private_key = x25519.X25519PrivateKey.generate()
+        self.public_key = self.private_key.public_key()
+        self.session_key = None
+
+    def generate_session_key(self, peer_public_bytes):
+        peer_public_key = x25519.X25519PublicKey.from_public_bytes(peer_public_bytes)
+        shared_key = self.private_key.exchange(peer_public_key)
+        self.session_key = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b'Bylicki Secure Session Key'
+        ).derive(shared_key)
+
+    def encrypt(self, plaintext: bytes):
+        if self.session_key is None:
+            raise Exception("Session key not generated.")
+        nonce = os.urandom(12)
+        aesgcm = AESGCM(self.session_key)
+        ciphertext = aesgcm.encrypt(nonce, plaintext, None)
+        return nonce + ciphertext
+
+    def decrypt(self, data: bytes):
+        if self.session_key is None:
+            raise Exception("Session key not generated.")
+        nonce = data[:12]
+        ciphertext = data[12:]
+        aesgcm = AESGCM(self.session_key)
+        return aesgcm.decrypt(nonce, ciphertext, None)
+
+    def rotate_key(self):
+        if self.session_key is None:
+            raise Exception("Session key not generated.")
+        timestamp = int(time.time()).to_bytes(8, 'big')
+        self.session_key = HKDF(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=None,
+            info=b'Bylicki Key Rotation' + timestamp
+        ).derive(self.session_key)
+
+if __name__ == "__main__":
+    partner = x25519.X25519PrivateKey.generate()
+    partner_pub = partner.public_key().public_bytes()
+    bsh = BylickiSecureHybrid()
+    bsh.generate_session_key(partner_pub)
+
+    msg = b"Top secret data"
+    encrypted = bsh.encrypt(msg)
+    print(f"Encrypted: {encrypted.hex()}")
+
+    bsh_partner = BylickiSecureHybrid()
+    bsh_partner.private_key = partner
+    bsh_partner.generate_session_key(bsh.public_key.public_bytes())
+    decrypted = bsh_partner.decrypt(encrypted)
+    print(f"Decrypted: {decrypted.decode()}")
+```
+
+<br>
+
+|3. Hinweise zur Nutzung und Integration|
+|---|
+
+>C-Code ist optimiert für ARM Cortex-M Mikrocontroller, idealerweise mit Hardware-RNG und AES-Beschleunigung.
+>mbedTLS wird als sichere, freie Kryptobibliothek empfohlen, enthält AES-GCM, SHA256, HMAC, und HKDF.
+>Curve25519 Implementierung sollte geprüft und sicherheitszertifiziert sein (z. B. libsodium oder micro-ecc).
+>Python-Code dient als funktionaler Prototyp und Test-Umgebung für schnelle Validierung.
+>Modularer Aufbau erlaubt einfache Erweiterung und Portierung auf andere Plattformen.
+
+
+
