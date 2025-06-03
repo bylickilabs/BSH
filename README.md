@@ -22,3 +22,11 @@
 >Python-Code dient als Prototyp und Testumgebung
 >Alle Module sind modular gestaltet, um einfache Integration und Erweiterung zu ermöglichen
 
+<br>
+
+|Vollständige Details des Bylicki Secure Hybrid (BSH) Projekts|
+|---|
+- 1. C-Code: Embedded Implementierung für Mikrocontroller
+  - 1.1 Curve25519 (ECC) Schlüsselgenerierung & ECDH
+
+>Header (ecc_curve25519.h):
