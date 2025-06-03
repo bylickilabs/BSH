@@ -16,7 +16,7 @@ HKDF Schlüsselableitung -C- Schlüsselrotation und Ableitung
 Python-Bindings für Testing & Prototyp	-Python- Kommunikation & Test der Kryptokomponenten
 
 
-| Links ausgerichtet | Mittig ausgerichtet | Rechts ausgerichtet |
+| Modul | Sprache | Beschreibung |
 |:------------------:|:-------------------:|:-------------------:|
 |:---                |:-------------------:|:-------------------:|
 | Inhalt             | Inhalt              | Inhalt              |
