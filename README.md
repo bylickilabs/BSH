@@ -5,13 +5,13 @@
 
 - I. Algorithmus-Konzept: Hybrid-Verschlüsselung „Bylicki Secure Hybrid (BSH)“
      - I.I Grundidee
->Kombination aus symmetrischer und asymmetrischer Verschlüsselung mit zusätzlicher Mehrfaktor-Zufallsgenerierung und eingebauter Schlüsselrotation zur Erhöhung der Sicherheit und Anpassbarkeit.
+>Kombination aus symmetrischer und asymmetrischer Verschlüsselung mit zusätzlicher Mehrfaktor-Zufallsgenerierung und eingebauter Schlüsselrotation zur Erhöhung der Sicherheit und Anpassbarkeit. <p>
 
 - I.II Algorithmus-Komponenten
->Symmetrischer Teil: AES-256 (Advanced Encryption Standard, 256 Bit Schlüssel)
->Asymmetrischer Teil: Elliptic Curve Cryptography (ECC) mit Curve25519
->Zufallsquelle: Kombiniert kryptographisch sichere Pseudozufallszahlen (CSPRNG) mit Hardware-Rauschquellen (z. B. Mikrochip-Sensoren)
->Schlüsselrotation: Alle 24h neue Schlüssel, generiert via Hash-basierte Schlüsselableitung (HKDF)
+>Symmetrischer Teil: AES-256 (Advanced Encryption Standard, 256 Bit Schlüssel) <p>
+>Asymmetrischer Teil: Elliptic Curve Cryptography (ECC) mit Curve25519 <p>
+>Zufallsquelle: Kombiniert kryptographisch sichere Pseudozufallszahlen (CSPRNG) mit Hardware-Rauschquellen (z. B. Mikrochip-Sensoren) <p>
+>Schlüsselrotation: Alle 24h neue Schlüssel, generiert via Hash-basierte Schlüsselableitung (HKDF) <p>
 >Integritätsprüfung: SHA-3 (Keccak) als Hashfunktion zur Nachrichtenauthentifizierung (HMAC)
 
 
