@@ -14,7 +14,7 @@
 | HKDF Schlüsselableitung             | C              | Schlüsselrotation und Ableitung              |
 | Python-Bindings für Testing & Prototyp             | Python              | Kommunikation & Test der Kryptokomponenten              |
 
-<br>
+<br><br>
 
 |Zusammenfassung|
 |---|
@@ -22,7 +22,7 @@
 >Python-Code dient als Prototyp und Testumgebung
 >Alle Module sind modular gestaltet, um einfache Integration und Erweiterung zu ermöglichen
 
-<br>
+<br><br>
 
 |Vollständige Details des Bylicki Secure Hybrid (BSH) Projekts|
 |---|
@@ -44,7 +44,7 @@ int compute_shared_secret(const uint8_t priv[32], const uint8_t peer_pub[32], ui
 #endif
 ```
 
-<br>
+<br><br>
 
 - Quellcode (ecc_curve25519.c):
 
@@ -75,7 +75,7 @@ int compute_shared_secret(const uint8_t priv[32], const uint8_t peer_pub[32], ui
 }
 ```
 
-<br>
+<br><br>
 
 |1.2 AES-256 GCM Verschlüsselung & Entschlüsselung|
 |---|
@@ -136,7 +136,7 @@ int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
 }
 ```
 
-<br>
+<br><br>
 
 |1.3 HKDF Schlüsselableitung (SHA-256 basierend)|
 |---|
@@ -206,7 +206,7 @@ void hkdf_expand(const uint8_t *prk, size_t prk_len,
 }
 ```
 
-<br>
+<br><br>
 
 |2. Python-Test- und Prototypcode|
 |---|
@@ -281,7 +281,7 @@ if __name__ == "__main__":
     print(f"Decrypted: {decrypted.decode()}")
 ```
 
-<br>
+<br><br>
 
 |3. Hinweise zur Nutzung und Integration|
 |---|
