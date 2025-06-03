@@ -46,7 +46,7 @@ int compute_shared_secret(const uint8_t priv[32], const uint8_t peer_pub[32], ui
 
 <br><br>
 
-- Quellcode (ecc_curve25519.c): <p>
+- Quellcode (ecc_curve25519.c):
 
 ```yarn
 #include "ecc_curve25519.h"
@@ -75,12 +75,12 @@ int compute_shared_secret(const uint8_t priv[32], const uint8_t peer_pub[32], ui
 }
 ```
 
-<br><br>
+<p><br><br>
 
 |1.2 AES-256 GCM Verschlüsselung & Entschlüsselung|
 |---|
 
-- Header (aes_gcm.h): <p>
+- Header (aes_gcm.h): 
 
 ```yarn
 #ifndef AES_GCM_H
@@ -100,7 +100,9 @@ int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
 #endif
 ```
 
-- Quellcode (aes_gcm.c): <p>
+<p>
+    
+- Quellcode (aes_gcm.c): 
 
 ```yarn
 #include "aes_gcm.h"
@@ -141,7 +143,9 @@ int aes_gcm_decrypt(const uint8_t *key, const uint8_t *nonce,
 |1.3 HKDF Schlüsselableitung (SHA-256 basierend)|
 |---|
 
-- Header (hkdf.h): <p>
+<p>
+    
+- Header (hkdf.h): 
 
 ```yarn
 #ifndef HKDF_H
@@ -210,6 +214,8 @@ void hkdf_expand(const uint8_t *prk, size_t prk_len,
 
 |2. Python-Test- und Prototypcode|
 |---|
+
+<p>
 
 - test_bsh.py
 
