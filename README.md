@@ -18,7 +18,7 @@ Python-Bindings für Testing & Prototyp	-Python- Kommunikation & Test der Krypto
 
 | Modul | Sprache | Beschreibung |
 |:------------------:|:-------------------:|:-------------------:|
-|                    |                     |                     |
+|--------------------|---------------------|---------------------|
 | ECC Schlüsselgenerierung (Curve25519)             | -C-              | Mikrocontroller-spezifisch, optimiert              |
 | Inhalt             | Inhalt              | Inhalt              |
 | Inhalt             | Inhalt              | Inhalt              |
