@@ -14,3 +14,11 @@
 | HKDF Schlüsselableitung             | C              | Schlüsselrotation und Ableitung              |
 | Python-Bindings für Testing & Prototyp             | Python              | Kommunikation & Test der Kryptokomponenten              |
 
+<br>
+
+|Zusammenfassung|
+|---|
+>C-Code ist optimiert für Embedded Systeme, nutzt bewährte Libraries (mbedTLS, libsodium empfohlen)
+>Python-Code dient als Prototyp und Testumgebung
+>Alle Module sind modular gestaltet, um einfache Integration und Erweiterung zu ermöglichen
+
