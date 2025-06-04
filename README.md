@@ -1,6 +1,9 @@
 |Bylicki Secure Hybrid (BSH)|
 |---|
 
+| ![BSH](https://github.com/user-attachments/assets/20ca8d02-77d4-4704-be80-405a4017da0d|
+|---|
+
 <br><br>
 
 - I. Algorithmus-Konzept: Hybrid-Verschlüsselung „Bylicki Secure Hybrid (BSH)“
